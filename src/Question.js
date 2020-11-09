@@ -53,9 +53,10 @@ class Question extends Component {
               <input
                 className="incorrect"
                 key={index}
+                name="answer"
                 type="radio"
                 value={incorrect}
-                checked={this.props.check}
+                defaultChecked={this.props.check}
                 disableRadio={this.props.disable}
                 onClick={() => {
                   this.handleChangeTwo();
@@ -63,7 +64,12 @@ class Question extends Component {
                   this.handleCheck();
                 }}
               />
+
+              
               <label>{incorrect}</label>
+
+
+              
             </div>
           );
         })}
@@ -72,8 +78,9 @@ class Question extends Component {
           <input
             className="correct"
             type="radio"
+            name="answer"
             value={this.props.data[nIndex].correct}
-            checked={this.props.check}
+            defaultChecked={this.props.check}
             disableRadio={this.props.disable}
             onClick={() => {
               this.handleChange();
