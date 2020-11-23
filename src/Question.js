@@ -9,8 +9,8 @@ class Question extends Component {
     }
   };
   handleNext = (event) => {
-   
     this.props.increamentNext();
+    // this.props.handleCheckTwo();
   };
 
   handleBack = (event) => {
@@ -22,22 +22,20 @@ class Question extends Component {
     this.props.handleText();
   };
 
-  handleCheck = (event) => {
-    this.props.handleCheckDisable();
+  handleCheckChange = (event) => {
+    this.props.handleCheck();
   };
 
-  handleResult = () => {
-    //     let nIndex = this.props.index;
-    //    if((nIndex)===(this.props.data.length-1)){
-    //    }
-  };
-
-  clearRadio = (event) => {
-    this.props.handleClear();
+  clearcheck = (event) => {
+    this.props.handleCheckTwo();
   };
 
   clearDisplay = (event) => {
     this.props.clearBothDisplay();
+  };
+
+  handleDisable = (event) => {
+    this.props.handleRadioDisable();
   };
 
   render() {
@@ -56,20 +54,16 @@ class Question extends Component {
                 name="answer"
                 type="radio"
                 value={incorrect}
-                defaultChecked={this.props.check}
-                disableRadio={this.props.disable}
-                onClick={() => {
+                checked={this.props.check}
+                disabled={this.props.disable}
+                onClick={(event) => {
                   this.handleChangeTwo();
-
-                  this.handleCheck();
+                  this.handleDisable();
+                  this.handleCheckChange();
                 }}
               />
 
-              
               <label>{incorrect}</label>
-
-
-              
             </div>
           );
         })}
@@ -80,12 +74,12 @@ class Question extends Component {
             type="radio"
             name="answer"
             value={this.props.data[nIndex].correct}
-            defaultChecked={this.props.check}
-            disableRadio={this.props.disable}
-            onClick={() => {
+            checked={this.props.check}
+            disabled={this.props.disable}
+            onClick={(event) => {
               this.handleChange();
-
-              this.handleCheck();
+              this.handleDisable();
+              this.handleCheckChange();
             }}
           />
           {this.props.data[nIndex].correct}
@@ -93,21 +87,25 @@ class Question extends Component {
         <br />
         <br />
 
-        <Link
-          className="back"
-          onClick={() => {
-            this.handleBack();
-          }}
-        >
-          <button>back</button>
+        <Link>
+          <button
+            className="back"
+            onClick={(event) => {
+              this.handleDisable();
+              this.handleBack();
+            }}
+          >
+            {" "}
+            back
+          </button>
         </Link>
+
         <Link>
           <button
             className="next"
-            onClick={() => {
+            onClick={(event) => {
               this.handleNext();
-              this.handleResult();
-              this.clearRadio();
+              this.clearcheck();
               this.clearDisplay();
             }}
           >

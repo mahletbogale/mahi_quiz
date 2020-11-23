@@ -5,7 +5,7 @@ class Home extends Component {
         return (
             <div className="home">
                 <Link to="/question/question">
-        <h1 > Travia Questions</h1>
+        <button className="start"> Start Questions</button>
        </Link> 
             </div>
         );

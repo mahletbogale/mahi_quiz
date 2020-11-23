@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import data from "./data";
-import { Route } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 
 import Question from "./Question";
-import Result from "./Result";
+
 import Home from "./Home";
 
 class App extends Component {
@@ -17,66 +17,62 @@ class App extends Component {
       display: "",
       displaytwo: [],
       text: "",
+      disable: false,
 
       check: false,
     };
   }
 
+  handleRadioDisable = () => {
+    this.setState({
+      disable: true,
+    });
+  };
+
   increamentNext = () => {
-    if((this.state.index===this.state.data.length-1)){
+    if (this.state.index === this.state.data.length - 1) {
       this.setState((prevState) => ({
         index: prevState.index,
       }));
+    } else {
+      this.setState((prevState) => ({
+        index: prevState.index + 1,
 
-    }else{
-
-    this.setState((prevState) => ({
-      index: prevState.index + 1,
-    }));
-  }
+        disable: false,
+      }));
+    }
   };
-
-
 
   decreamentBack = () => {
-    if(this.state.index === 0){
+    if (this.state.index === 0 || this.state.disable === true) {
       this.setState((prevState) => ({
         index: prevState.index,
       }));
-
-    }else{
-    this.setState((prevState) => ({
-      index: prevState.index - 1,
-    }));
-  }
+    } else {
+      this.setState((prevState) => ({
+        index: prevState.index - 1,
+        disable: true,
+      }));
+    }
   };
 
-
-
   addScore = () => {
-
-    if((this.state.index===this.state.data.length-1)){
+    if (this.state.index === this.state.data.length - 1) {
       this.setState((prevState) => ({
         score: prevState.score,
       }));
-
-    }else{
-    this.setState((prevState) => ({
-      score: prevState.score + 1,
-    }));
-  }
+    } else {
+      this.setState((prevState) => ({
+        score: prevState.score + 1,
+      }));
+    }
   };
-
-
-
 
   handleDisplay = () => {
     this.setState({
       display: "correct answer",
     });
   };
-
- 
 
   handleDisplayTwo = (event) => {
     this.setState({
@@ -90,13 +86,13 @@ class App extends Component {
     });
   };
 
-  handleCheckDisable = (event) => {
+  handleCheck = (event) => {
     this.setState({
-      check: true,
+      check: Event.target,
     });
   };
 
-  handleClear = (event) => {
+  handleCheckTwo = (event) => {
     this.setState({
       check: false,
     });
@@ -114,13 +110,12 @@ class App extends Component {
     return (
       <div className="hello">
         <main>
-          <Route
-            path="/result/result"
-            exact
-            render={() => <Result Component={Component} />}
-          />
+          <Link to="/">
+            <button className="backhome">Back to Home</button>
+          </Link>
 
           <Route path="/" exact render={() => <Home Component={Component} />} />
+
           <Route
             path="/question/question"
             exact
@@ -138,10 +133,13 @@ class App extends Component {
                 displaytwo={this.state.displaytwo}
                 text={this.state.text}
                 handleText={this.handleText}
-                handleCheckDisable={this.handleCheckDisable}
+                handleCheck={this.handleCheck}
                 check={this.state.check}
                 handleClear={this.handleClear}
                 clearBothDisplay={this.clearBothDisplay}
+                handleCheckTwo={this.handleCheckTwo}
+                handleRadioDisable={this.handleRadioDisable}
+                disable={this.state.disable}
               />
             )}
           />
